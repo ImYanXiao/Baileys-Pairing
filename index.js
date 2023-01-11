@@ -3,7 +3,7 @@ const qrcode = require("qrcode-terminal")
 const { delay , useMultiFileAuthState } = require("@adiwajshing/baileys")
 const { state, saveCreds } = await useMultiFileAuthState('./sessions')
 
-function qr() {
+async function qr() {
 	let conn = makeWASocket({
 		auth: state,
 		printQRInTerminal: true,

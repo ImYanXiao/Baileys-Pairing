@@ -1,7 +1,7 @@
 const makeWASocket = require("@adiwajshing/baileys").default
 const qrcode = require("qrcode-terminal")
-const { delay , useSingleFileAuthState } = require("@adiwajshing/baileys")
-const { state, saveState } = useSingleFileAuthState('./family-session.json')
+const { delay , useMultiFileAuthState } = require("@adiwajshing/baileys")
+const { state, saveCreds } = await useMultiFileAuthState('./sessions')
 
 function qr() {
 	let conn = makeWASocket({
@@ -23,7 +23,7 @@ function qr() {
 			qr()
 		}
 	})
-	conn.ev.on('creds.update', saveState)
+	conn.ev.on('creds.update', saveCreds)
 	conn.ev.on('messages.upsert', () => { })
 }
 qr()

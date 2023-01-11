@@ -1,6 +1,8 @@
 const makeWASocket = require("@adiwajshing/baileys").default
 const qrcode = require("qrcode-terminal")
 const { delay , useMultiFileAuthState } = require("@adiwajshing/baileys")
+
+async function connect() {
 const { state, saveCreds } = await useMultiFileAuthState('./sessions')
 
 async function qr() {
@@ -27,3 +29,5 @@ async function qr() {
 	conn.ev.on('messages.upsert', () => { })
 }
 qr()
+}
+connect() 

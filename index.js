@@ -1,15 +1,32 @@
-const makeWASocket = require("@adiwajshing/baileys").default
-const qrcode = require("qrcode-terminal")
-const { delay , useMultiFileAuthState } = require("@adiwajshing/baileys")
+const makeWASocket = require("@whiskeysockets/baileys").default
+const rl = require("readline")
+const { delay , useMultiFileAuthState } = require("@whiskeysockets/baileys")
+
+
+var question = function(text) {
+            return new Promise(function(resolve) {
+                rl.question(text, resolve);
+            });
+        };
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
 
 async function connect() {
 const { state, saveCreds } = await useMultiFileAuthState('./sessions')
 
 async function qr() {
+
+	const P = !process.argv.includes('--use-pairing-code')
 	let conn = makeWASocket({
 		auth: state,
-		printQRInTerminal: true,
+		printQRInTerminal: !P,
+		browser: ['Mac OS', 'safari', '5.1.10'], 
 	})
+	if (usePairingCode && !conn.authState.creds.registered) {
+			const phoneNumber = await question('Please enter your mobile phone number:\n')
+			const code = await conn.requestPairingCode(phoneNumber)
+			console.log(`Pairing code: ${code}`)
+
+	}
 	conn.ev.on("connection.update", async (s) => {
 		const { connection, lastDisconnect } = s
 		if (connection == "open") {

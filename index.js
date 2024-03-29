@@ -1,5 +1,5 @@
 const makeWASocket = require("@whiskeysockets/baileys").default
-const rl = require("readline")
+const readline = require("readline")
 const { delay , useMultiFileAuthState } = require("@whiskeysockets/baileys")
 
 
@@ -21,7 +21,7 @@ async function qr() {
 		printQRInTerminal: !P,
 		browser: ['Mac OS', 'safari', '5.1.10'], 
 	})
-	if (usePairingCode && !conn.authState.creds.registered) {
+	if (P && !conn.authState.creds.registered) {
 			const phoneNumber = await question('Please enter your mobile phone number:\n')
 			const code = await conn.requestPairingCode(phoneNumber)
 			console.log(`Pairing code: ${code}`)
